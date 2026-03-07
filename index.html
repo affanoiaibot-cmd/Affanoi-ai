@@ -167,6 +167,19 @@
         border-radius: 4px;
         background-color: var(--sk-bg);
     }
+    /* --- TWISTING PRELOADER CSS --- */
+    .logo-twist {
+        width: 120px; /* Size adjust kar sakte ho */
+        content: url('https://i.ibb.co/HDpt6FMr/Picsart-26-02-23-16-51-35-661.jpg');
+        /* infinite lagaya hai taaki jab tak load ho, ye ghoomta rahe */
+        animation: twist-effect 1.5s ease-in-out infinite; 
+    }
+
+    @keyframes twist-effect {
+        0% { transform: scale(1) rotate(0deg); filter: blur(0px); border-radius: 0%; }
+        50% { transform: scale(0.5) rotate(360deg); filter: blur(3px); border-radius: 50%; }
+        100% { transform: scale(1) rotate(720deg); filter: blur(0px); border-radius: 0%; }
+    }
     /* --- END SKELETON CSS --- */
 
     #preloader {
@@ -640,7 +653,8 @@
 <body data-theme="light">
 
 <div id="preloader">
-    <div class="loader-ring"></div>
+    <img class="logo-twist" alt="EN Logo">
+</div>
 </div>
 
 <div id="splash-screen-container">
