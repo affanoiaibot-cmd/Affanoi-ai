@@ -50,25 +50,23 @@ const ROUTES = {
 function handleHashRouting() {
     const hash = window.location.hash;
     if (!hash) {
-        closeAllModals(false);
-        resetChat(true);
+        closeAllModals(false); // Close all if no hash
         return;
     }
 
+    // 1. Handle dynamic blog posts (#blog-1, #blog-2 etc)
     if (hash.startsWith('#blog-')) {
         const index = hash.replace('#blog-', '');
-        if (index && !isNaN(index)) { openBlogModal(parseInt(index), true); return; }
+        if (index && !isNaN(index)) {
+            openBlogModal(parseInt(index), true);
+            return;
+        }
     }
     
-    // Custom URL Chat Links (#chat/math, etc)
-    if (hash.startsWith('#chat/')) {
-        const subject = decodeURIComponent(hash.replace('#chat/', ''));
-        const subjectBtn = document.querySelector(`.subject-item[data-subject="${subject}"]`);
-        if (subjectBtn) { selectSubject(subjectBtn, true); } else { resetChat(true); }
-        return;
+    // 2. Handle mapped routes
+    if (ROUTES[hash]) {
+        ROUTES[hash]();
     }
-
-    if (ROUTES[hash]) { ROUTES[hash](); }
 }
 
 // Listen for hash changes (Back/Forward navigation)
@@ -121,12 +119,9 @@ function autoResize(textarea) {
     textarea.style.height = Math.min(textarea.scrollHeight, 150) + 'px';
 }
 
-function selectSubject(element, fromHash = false) {
+function selectSubject(element) {
     const subject = element.dataset.subject;
     currentSubject = subject;
-    
-    if (!fromHash) { window.location.hash = `#chat/${encodeURIComponent(subject)}`; }
-
     document.querySelectorAll('.subject-item').forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
     
@@ -134,8 +129,9 @@ function selectSubject(element, fromHash = false) {
     document.getElementById('inputArea').style.display = 'block'; 
     
     const welcomeScreen = document.getElementById('welcomeScreen');
-    if (welcomeScreen) welcomeScreen.classList.add('hidden');
-    
+    if (welcomeScreen) {
+        welcomeScreen.classList.add('hidden');
+    }
     document.getElementById('chatMessages').innerHTML = '';
     document.getElementById('chatSubjectTitle').innerText = getSubjectName(subject);
     if (subject === 'image_generation') {
@@ -145,32 +141,30 @@ function selectSubject(element, fromHash = false) {
         questionInput.placeholder = "Ask your question or try '/summarize'"; 
         addMessage(`Hello! I'm EduMate.AI. How can I help you with ${getSubjectName(subject)} today? 📚`, 'ai');
     }
-    if (window.innerWidth <= 768) { sidebar.classList.remove('open'); }
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+    }
 }
 
-function resetChat(fromHash = false) {
+function resetChat() {
     currentSubject = '';
-    if (!fromHash) window.location.hash = ''; 
-
     document.getElementById('inputArea').classList.add('hidden');
     document.getElementById('inputArea').style.display = 'none'; 
     
     document.getElementById('chatMessages').innerHTML = `
         <div class="welcome-screen" id="welcomeScreen">
-            <div id="welcomeMediaWrapper" class="welcome-media-container">
-                <div style="padding-top: 90px; color: gray;">Loading media...</div>
-            </div>
-            <h3 style="font-size: 1.6em; font-weight: 800; color: var(--theme-text-primary);">Welcome to EduMate.Ai</h3>
+            <div class="welcome-icon">🎓</div>
+            <h3>Welcome to EduMate.AI!</h3>
             <p style="margin: 15px 0;">Select a subject from the side menu to start learning.</p>
         </div>
     `;
-    fetchWelcomeMedia(); 
-    
     const savedName = localStorage.getItem("username") || "User";
     document.getElementById("chatSubjectTitle").innerText = `Welcome, ${savedName}!`;
     document.querySelectorAll('.subject-item').forEach(btn => btn.classList.remove('active'));
     
-    if (window.innerWidth <= 768) { sidebar.classList.remove('open'); }
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+    }
 }
 
 function getSubjectName(subject) {
@@ -296,7 +290,7 @@ function formatMessage(content) {
     if (content.trim().startsWith('<div') && content.includes('<img')) return content;
     const urlRegex = /(https?:\/\/[^\s"<>]+)/g;
     if (content.includes('<a href=')) return content;
-    return content.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');              
+    return content.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');             
 }
 
 function showLoading() {
@@ -390,8 +384,7 @@ function logout() {
     setTimeout(() => {
         currentSubject = '';
         document.getElementById('inputArea').style.display = 'none';
-        document.getElementById('chatMessages').innerHTML = `<div class="welcome-screen" id="welcomeScreen"><div id="welcomeMediaWrapper" class="welcome-media-container"><div style="padding-top: 90px; color: gray;">Loading media...</div></div><h3 style="font-size: 1.6em; font-weight: 800; color: var(--theme-text-primary);">Welcome to EduMate.Ai</h3><p style="margin: 15px 0;">Select a subject from the side menu to start learning.</p></div>`;
-        fetchWelcomeMedia();
+        document.getElementById('chatMessages').innerHTML = `<div class="welcome-screen" id="welcomeScreen"><div class="welcome-icon">🎓</div><h3>Welcome to EduMate.AI!</h3><p style="margin: 15px 0;">Select a subject from the side menu to start learning.</p></div>`;
         document.getElementById('chatSubjectTitle').innerText = 'EduMate.AI';
         document.querySelectorAll('.subject-item').forEach(btn => btn.classList.remove('active'));
         loadProfile();
@@ -940,95 +933,3 @@ advVolumeRange.addEventListener('input', e => { advVideo.volume = e.target.value
 advFullscreenBtn.addEventListener('click', () => { if(!document.fullscreenElement) { advPlayer.requestFullscreen().then(() => screen.orientation?.lock('landscape').catch(()=>{})) } else { document.exitFullscreen(); } });
 advPipBtn.addEventListener('click', () => document.pictureInPictureElement ? document.exitPictureInPicture() : advVideo.requestPictureInPicture());
 advFitBtn.addEventListener('click', () => advVideo.classList.toggle('video-fill'));
-
-
-// --- Firebase Welcome Slider Logic ---
-let welcomeSlides = [];
-let currentWelcomeIndex = 0;
-let welcomeSlideTimer = null;
-
-function fetchWelcomeMedia() {
-    db.ref('welcome_media').once('value').then((snapshot) => {
-        const data = snapshot.val();
-        const wrapper = document.getElementById('welcomeMediaWrapper');
-        if (!wrapper) return;
-
-        if (data && (Array.isArray(data) || typeof data === 'object')) {
-            const items = Array.isArray(data) ? data : Object.values(data);
-            welcomeSlides = items.slice(0, 10);
-            renderWelcomeCarousel(wrapper);
-        } else {
-            wrapper.style.display = 'none';
-        }
-    }).catch(err => console.log("Media fetch error:", err));
-}
-
-function renderWelcomeCarousel(wrapper) {
-    wrapper.innerHTML = ''; 
-    if (welcomeSlides.length === 0) { wrapper.style.display = 'none'; return; }
-    wrapper.style.display = 'block';
-
-    welcomeSlides.forEach((item, index) => {
-        const slideDiv = document.createElement('div');
-        slideDiv.className = `welcome-slide ${index === 0 ? 'active' : ''}`;
-        slideDiv.id = `welcome-slide-${index}`;
-
-        if (item.type === 'video') {
-            slideDiv.innerHTML = `
-                <video id="welcome-video-${index}" src="${item.url}" playsinline loop disablePictureInPicture></video>
-                <button class="welcome-play-pause-btn" onclick="toggleWelcomeVideo(${index})">
-                    <i id="welcome-icon-${index}" class="fas fa-play"></i>
-                </button>
-            `;
-        } else {
-            slideDiv.innerHTML = `<img src="${item.url}" alt="Welcome Media">`;
-        }
-        wrapper.appendChild(slideDiv);
-    });
-
-    currentWelcomeIndex = 0;
-    startWelcomeCarousel();
-}
-
-function startWelcomeCarousel() {
-    clearInterval(welcomeSlideTimer);
-    welcomeSlideTimer = setInterval(() => {
-        if (welcomeSlides.length <= 1) return;
-        const currentItem = welcomeSlides[currentWelcomeIndex];
-        if (currentItem.type === 'video') {
-            const vid = document.getElementById(`welcome-video-${currentWelcomeIndex}`);
-            if (vid && !vid.paused) return; 
-        }
-        nextWelcomeSlide();
-    }, 4000); 
-}
-
-function nextWelcomeSlide() {
-    if (welcomeSlides[currentWelcomeIndex].type === 'video') {
-        const vid = document.getElementById(`welcome-video-${currentWelcomeIndex}`);
-        const icon = document.getElementById(`welcome-icon-${currentWelcomeIndex}`);
-        if(vid) vid.pause();
-        if(icon) { icon.classList.remove('fa-pause'); icon.classList.add('fa-play'); }
-    }
-
-    document.getElementById(`welcome-slide-${currentWelcomeIndex}`).classList.remove('active');
-    currentWelcomeIndex = (currentWelcomeIndex + 1) % welcomeSlides.length;
-    document.getElementById(`welcome-slide-${currentWelcomeIndex}`).classList.add('active');
-}
-
-function toggleWelcomeVideo(index) {
-    const video = document.getElementById(`welcome-video-${index}`);
-    const icon = document.getElementById(`welcome-icon-${index}`);
-    if (video.paused) {
-        video.play();
-        icon.classList.remove('fa-play');
-        icon.classList.add('fa-pause');
-    } else {
-        video.pause();
-        icon.classList.remove('fa-pause');
-        icon.classList.add('fa-play');
-    }
-}
-
-// Initialize slider on load
-setTimeout(() => { fetchWelcomeMedia(); }, 3500);
