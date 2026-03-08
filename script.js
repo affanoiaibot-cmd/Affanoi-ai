@@ -1,4 +1,4 @@
-// --- PRELOADER LOGIC ---
+ // --- PRELOADER LOGIC ---
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     setTimeout(() => {
