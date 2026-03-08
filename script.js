@@ -54,7 +54,7 @@ function handleHashRouting() {
         return;
     }
 
-    // 1. Handle dynamic blog posts (#blog-1, #blog-2 etc)
+    // 1. Handle dynamic blog posts (#blog-{title}, #blog-{title }etc)
     if (hash.startsWith('#blog-')) {
         const index = hash.replace('#blog-', '');
         if (index && !isNaN(index)) {
@@ -323,7 +323,7 @@ function handleKeyPress(event) {
 async function generateImage(prompt) {
     const encodedPrompt = encodeURIComponent(prompt);
     const uniqueId = Date.now();
-    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?n=${uniqueId}`;
+    const imageUrl = `hhttps://r-gengpt-api.vercel.app/api/image?prompt=${encodedPrompt}?n=${uniqueId}`;
     return `
     <div class="image-wrapper">
         <div id="img-loader-${uniqueId}" class="image-loading-placeholder">
