@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- THEME COLOR -->
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#202123" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<title>Affanoi AI | Your Smart Learning Assistant</title>
+
+<!-- ADVANCED SEO METADATA -->
+<meta name="google-site-verification" content="google17d3cbafc389f118.html" />
+<link rel="canonical" href="https://edumatesolverai.gt.tc/" />
+<meta name="title" content="Affanoi AI - EduMate Solver | Ultimate AI Learning Assistant">
+<meta name="description" content="Master Math, Physics, and Chemistry with EduMate Solver AI by Affanoi. Get instant step-by-step solutions and AI-generated study guides. Try the best AI homework helper today.">
+<meta name="keywords" content="Affanoi AI, EduMate Solver, JKBOSE Math Solver, AI Homework Helper, Smart Learning Assistant, Jaffer, JKBOSE Class 11th, AI Study Buddy">
+<meta name="author" content="Affanoi.X (Jaffer)">
+<meta name="robots" content="index, follow">
+
+<!-- OPEN GRAPH / FACEBOOK -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://edumatesolverai.gt.tc/">
+<meta property="og:title" content="EduMate Solver AI | Affanoi Learning">
+<meta property="og:description" content="Unlock the power of AI for your studies. Instant solutions for Math, Science, and more.">
+<meta property="og:image" content="https://i.ibb.co/W4WmzZwf/Picsart-25-09-04-19-37-16-752.png">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://edumatesolverai.gt.tc/">
+<meta name="twitter:title" content="EduMate Solver AI | Affanoi">
+<meta name="twitter:description" content="The ultimate AI-powered student assistant for JKBOSE and beyond.">
+<meta name="twitter:image" content="https://i.ibb.co/W4WmzZwf/Picsart-25-09-04-19-37-16-752.png">
+
+<!-- STRUCTURED DATA FOR GOOGLE (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "EduMate Solver AI",
+  "operatingSystem": "Web/Mobile",
+  "applicationCategory": "EducationApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Jaffer"
+  },
+  "description": "An advanced AI tutor for Mathematics, Physics, Chemistry and Biology."
+}
+</script>
+
+<link rel="icon" type="image/png" href="https://i.ibb.co/W4WmzZwf/Picsart-25-09-04-19-37-16-752.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- External CSS -->
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body data-theme="light">
+
+<div id="preloader">
+    <img class="logo-twist" alt="EN Logo" src="splash.png">
+</div>
+
+<div id="splash-screen-container">
+    <div class="affanoi-screen" id="affanoiSplashScreen">
+        <p class="crafted">crafted with <span>♥</span></p>
+        <div class="logo-row">
+            <span class="by">by</span>
+            <div class="brand">
+                <span class="brand-text">AFFANOI</span>
+                <div class="brand-logo"><img src="https://i.ibb.co/ZpKm3GN9/Picsart-25-09-04-19-37-16-752.png" alt="Affanoi Logo"></div>
+            </div>
+        </div>
+        <div class="underline"></div>
+        <div class="socials">
+          <a class="disabled"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/nova_jfrrr/#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.snapchat.com/add/ratherjaffer24?share_id=z4ucTk63McQ&locale=en-US" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
+        </div>
+        <p class="version">Version 3.32.2 (2025)</p>
+    </div>
+</div>
+
+<div class="main-container" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header"><button class="new-chat-btn" onclick="resetChat()">+ New Chat</button></div>
+        <ul class="subjects-list">
+            <li class="subject-item" data-subject="Ask anything" onclick="selectSubject(this)"><span class="subject-icon">🔍</span><span>Ask anything</span></li>
+            <li class="subject-item" data-subject="image_generation" onclick="selectSubject(this)"><span class="subject-icon">🎨</span><span>Image Generation</span></li>
+            <li class="subject-item" data-subject="english" onclick="selectSubject(this)"><span class="subject-icon">📖</span><span>English</span></li>
+            <li class="subject-item" data-subject="math" onclick="selectSubject(this)"><span class="subject-icon">🧮</span><span>Math</span></li>
+            <li class="subject-item" data-subject="physics" onclick="selectSubject(this)"><span class="subject-icon">⚛️</span><span>Physics</span></li>
+            <li class="subject-item" data-subject="chemistry" onclick="selectSubject(this)"><span class="subject-icon">🧪</span><span>Chemistry</span></li>
+            <li class="subject-item" data-subject="biology" onclick="selectSubject(this)"><span class="subject-icon">🧬</span><span>Biology</span></li>
+        </ul>
+        <div class="sidebar-update-banner" id="sidebarUpdateBanner" style="display: none;">
+            <img src="https://i.ibb.co/yBMTBcdB/milk-and-mocha-hug.gif" alt="Update" class="sidebar-update-icon">
+            <div class="sidebar-update-text"><strong>New update available</strong><a href="#" id="sidebarUpdateLink" target="_blank" rel="noopener noreferrer">Update now ✨</a></div>
+        </div>
+        <div class="sidebar-footer">
+            <div class="sidebar-utils">
+                <button class="sidebar-btn" id="themeToggleBtn" onclick="toggleTheme()"><span>🌙</span> Theme</button>
+                <button class="sidebar-btn" onclick="openFocusTimer()"><span>⏱️</span> Timer</button>
+            </div>
+            <button class="profile-menu-btn" onclick="openMenu()">
+                <div class="profile-pic-small" id="profilePicSmall"></div><span id="profileNameSmall">User</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="chat-area">
+        <div class="chat-header">
+            <span class="menu-toggle" id="menuToggle">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </span>
+            <h2 id="chatSubjectTitle">EduMate.AI</h2>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">🎓</div>
+                <h3>Welcome to EduMate.AI!</h3>
+                <p style="margin: 15px 0;">Select a subject from the side menu to start learning.</p>
+            </div>
+        </div>
+        <div class="input-area hidden" id="inputArea">
+            <div class="input-container">
+                <textarea class="question-input" id="questionInput" placeholder="Ask your question or try '/summarize'" oninput="autoResize(this)" onkeypress="handleKeyPress(event)"></textarea>
+                <button class="send-btn" id="sendBtn" onclick="sendQuestion()" title="Send">➤</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modals -->
+<div class="modal" id="nameModal">
+    <div class="modal-content">
+        <h2>👋 Welcome to EduMate.AI</h2>
+        <p>Please enter your name to continue:</p>
+        <input type="text" id="username" placeholder="Type your name...">
+        <button onclick="checkName()">Continue</button>
+        <p class="error" id="errorMsg"></p>
+    </div>
+</div>
+
+<div class="modal" id="aboutModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAbout()">✖</span>
+        <h2>ℹ️ About EduMate.AI</h2>
+        <p><strong>Version:</strong> 3.32.2</p>
+        <p><strong>Developed by:</strong> <a href="#" onclick="openDeveloperModal(event)" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Jaffer (nova)</a></p>
+        <div class="social-follow-text">Follow on Social Media:</div>
+        <div class="social-icons-container">
+            <a href="https://www.instagram.com/nova_jfrrr?igsh=MTdwM2YwNTVwNzV4cA==" target="_blank" rel="noopener noreferrer"><img src="https://i.ibb.co/p6fJsHXV/images-6.jpg" alt="Instagram Logo"></a>
+            <a href="http://t.me/mineheartO" target="_blank" rel="noopener noreferrer"><img src="https://i.ibb.co/YFW2bgNX/Picsart-25-10-12-01-27-00-320.jpg" alt="Telegram Logo"></a>
+        </div>
+        <p class="footer-text">EduMate Solver by Affanoi.X</p>
+    </div>
+</div>
+
+<div class="modal" id="communityModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeCommunity()">✖</span>
+        <h2>🌐 Join Our Community</h2>
+        <p>Connect with other learners on your favorite platform!</p>
+        <div class="community-links">
+            <a href="https://t.me/EduMateTalkies" target="_blank">
+                <button class="community-btn telegram-btn"><i class="fab fa-telegram"></i> Join on Telegram</button>
+            </a>
+            <a href="https://chat.whatsapp.com/KMi0gVfmHl8Ex8IcJbHXg1" target="_blank">
+                <button class="community-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> Join on WhatsApp</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="blogModal">
+    <div class="blog-header-full">
+        <h2>📢 Updates & News</h2>
+        <span class="close-btn" onclick="closeBlogModal()" style="position: static; font-size: 24px;">✖</span>
+    </div>
+    <div id="blogContainer" class="blog-content-wrapper">
+        <div class="loading-text">Loading updates...</div>
+    </div>
+</div>
+
+<div class="fullscreen-menu" id="fullscreenMenu">
+    <span class="close-btn" onclick="closeMenu()">✖</span>
+    
+    <div class="profile-pic-large" id="profilePicLarge" onclick="document.getElementById('uploadPic').click()"></div>
+    <div class="profile-name" id="profileNameLarge">User</div>
+    <input type="file" id="uploadPic" accept="image/*" class="hidden">
+    
+    <div class="menu-buttons">  
+        <button class="menu-btn" onclick="logout()"><i class="fas fa-user-circle"></i> Change User</button>
+        <button class="menu-btn btn-pro" onclick="openProModal()"><i class="fas fa-crown"></i> Subscribe to Pro</button>
+        <button class="menu-btn" onclick="shareApp()"><i class="fas fa-share-alt"></i> Share App</button>
+        <button class="menu-btn" onclick="openCommunity()"><i class="fas fa-users"></i> Join Community</button>
+        <button class="menu-btn" onclick="openAbout()"><i class="fas fa-info-circle"></i> About</button>
+        <button class="menu-btn" onclick="openBlogModal()"><i class="fas fa-newspaper"></i> Blog</button> 
+        <button class="menu-btn" onclick="openFeedbackModal(event)"><i class="fas fa-comment-alt"></i> Send Feedback</button>
+    </div>
+
+    <div class="menu-footer-credits">
+        <p class="crafted">crafted with <span>♥</span></p>
+        <div class="logo-row">
+          <span class="by">by</span>
+          <div class="brand">
+            <span class="brand-text">AFFANOI</span>
+            <div class="brand-logo"><img src="https://i.ibb.co/ZpKm3GN9/Picsart-25-09-04-19-37-16-752.png" alt="Affanoi Logo"></div>
+          </div>
+        </div>
+        <div class="underline"></div>
+        <div class="socials">
+          <a class="disabled"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/nova_jfrrr/#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.snapchat.com/add/ratherjaffer24?share_id=z4ucTk63McQ&locale=en-US" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
+        </div>
+        <p class="version">Version 3.32.2 (2025)</p>
+    </div>
+</div>
+
+<div class="modal" id="proModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeProModal()">✖</span>
+        <div class="pro-header"><h2>Upgrade to Pro 👑</h2><p>Unlock the full potential of EduMate.AI</p></div>
+        <div class="pro-carousel-container">
+            <div class="pro-carousel-track" id="proCarouselTrack">
+                <div class="pro-carousel-slide"><img src="https://i.ibb.co/5xkCd7cX/IMG-20251124-195935.png" alt="Loading Benefits..."></div>
+            </div>
+        </div>
+        <div class="pricing-container">
+            <div class="pricing-card" onclick="selectPlan(this, '9 Days', '29')"><div class="pricing-price">₹29</div><div class="pricing-duration">9 Days</div></div>
+            <div class="pricing-card selected" onclick="selectPlan(this, '1 Month', '99')"><div class="pricing-price">₹99</div><div class="pricing-duration">1 Month</div></div>
+            <div class="pricing-card" onclick="selectPlan(this, '1 Year', '499')"><div class="pricing-price">₹499</div><div class="pricing-duration">1 Year</div></div>
+        </div>
+        <div class="payment-methods-title">Tap a logo to pay <span id="payAmountDisplay" style="font-weight:bold; color: var(--accent-color);">₹99</span></div>
+        <div class="payment-logos">
+            <button class="payment-logo-btn" onclick="selectPaymentApp('fampay', this)" title="FamPay"><img src="https://i.ibb.co/cSQjBVTZ/logofile-06-2.png" alt="FamPay"></button>
+            <button class="payment-logo-btn" onclick="selectPaymentApp('gpay', this)" title="Google Pay"><img src="https://i.ibb.co/mFNwr5S7/images-2.png" alt="Google Pay"></button>
+            <button class="payment-logo-btn" onclick="selectPaymentApp('phonepe', this)" title="PhonePe"><img src="https://i.ibb.co/SwX0JJhK/phonepe-app-icon-transparent-background-free-png.png" alt="PhonePe"></button>
+            <button class="payment-logo-btn" onclick="selectPaymentApp('paytm', this)" title="Paytm"><img src="https://i.ibb.co/ksLwq8yZ/images-3.png" alt="Paytm"></button>
+        </div>
+        <button id="payNowActionBtn" class="btn-pay-action" onclick="executePay()" disabled>Select App to Pay</button>
+        <div class="pro-form">
+            <h3 style="margin-bottom: 10px; font-size: 1.1em;">Confirm Details</h3>
+            <input type="text" id="proName" placeholder="Your Name" readonly>
+            <input type="tel" id="proContact" placeholder="Contact Number (WhatsApp)">
+            <input type="text" id="proUpi" placeholder="Your UPI ID (used for payment)">
+            <input type="hidden" id="selectedPlan" value="1 Month - ₹99">
+            <button onclick="submitProRequest()" class="btn-pro" style="width: 100%; justify-content: center; margin-top: 10px;">Send Pro Request 🚀</button>
+            <p style="font-size: 0.8em; text-align: center; margin-top: 10px; color: grey;">Note: First complete payment above, then send request.</p>
+        </div>
+    </div>
+</div>
+
+<div class="fullscreen-modal" id="developerModal">
+    <span class="close-btn" onclick="closeDeveloperModal()">✖</span>
+    <div class="modal-content-full" id="developerDetailsContent">
+        <div class="profile-pic-large" style="background-image: url('https://i.ibb.co/jZf4dqxt/IMG-20251113-175429.png'); margin-bottom: 20px;"></div>
+        <h2 style="margin-bottom: 10px;">Jaffer (nova)</h2>
+        <p style="text-align: center; max-width: 600px; line-height: 1.6; font-size: 1.1em;">Loading details...</p>
+    </div>
+</div>
+
+<div class="modal" id="adminPopupModal">
+    <div class="modal-content">
+        <span class="close-btn" id="adminPopupCloseBtn" onclick="closeAdminPopup()">✖</span>
+        <h2>🔔 Notification</h2>
+        <p id="adminPopupMessage"></p>
+        <button id="adminPopupLinkBtn" class="hidden" style="background: var(--accent-gradient); margin-bottom: 10px;">Open Link</button>
+        <button id="adminPopupCloseBtn2" onclick="closeAdminPopup()" style="background: #6c757d;">Close</button>
+    </div>
+</div>
+
+<div class="modal" id="appUpdateModal">
+    <div class="modal-content">
+        <div class="update-modal-header"><img src="https://i.ibb.co/ksRTPySm/IMG-20251108-073309.png" alt="App Update Header"></div>
+        <img src="https://i.ibb.co/Y7d6WCdh/Picsart-25-08-29-11-31-17-401.png" class="update-modal-icon" alt="App Logo">
+        <div class="update-modal-content">
+            <span class="close-btn" id="updateModalCloseBtn" onclick="closeUpdatePopup()" style="top:0; right:0;">✖</span> 
+            <h2 id="updateModalTitle">🎉 App Update Available!</h2>
+            <p id="updateModalMessage">A new version (<strong id="updateVersionText"></strong>) is available.</p>
+            <div id="updateNotesContainer">
+                <p><strong>What's new:</strong></p>
+                <p id="updateNotesText"></p>
+            </div>
+            <div class="update-modal-buttons">
+                <button id="updateModalLaterBtn" onclick="closeUpdatePopup()">Later</button>
+                <button id="updateNowBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="maintenanceModal">
+    <div class="modal-content">
+        <div class="welcome-icon">🚧</div>
+        <h2>Under Maintenance</h2>
+        <p style="font-size: 1.1em; line-height: 1.6;">EduMate.AI is currently down for maintenance.<br>We'll be back soon!</p>
+    </div>
+</div>
+
+<div class="modal" id="imageViewerModal" style="z-index: 5500;"> 
+    <div class="modal-content" style="padding: 10px; background: transparent; box-shadow: none; max-width: 90%; width: auto; max-height: 90vh; display: flex; justify-content: center; align-items: center;">
+        <span class="close-btn" onclick="closeImageViewer()" style="color: white; text-shadow: 0 0 5px rgba(0,0,0,0.8); font-size: 30px; position: fixed; top: 20px; right: 20px; z-index: 5501; background: rgba(0,0,0,0.5); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">✖</span>
+        <img id="imageViewerDisplay" src="" alt="Full View" style="max-width: 100%; max-height: 85vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    </div>
+</div>
+
+<div class="modal" id="eventImageModal" style="z-index: 4500;"> 
+    <div class="modal-content" style="padding: 10px; background: transparent; box-shadow: none; max-width: 600px;">
+        <span class="close-btn" onclick="closeEventImagePopup()" style="color: white; text-shadow: 2px 2px 4px #000000; font-size: 28px; top: 10px; right: 15px;">✖</span>
+        <a id="eventImageLink" href="#" target="_blank" rel="noopener noreferrer">
+            <img id="eventImageDisplay" src="" alt="Event Image" style="max-width: 100%; max-height: 80vh; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+        </a>
+    </div>
+</div>
+
+<div class="modal" id="focusTimerModal" style="z-index: 3500;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeFocusTimer()">✖</span>
+        <h2>⏱️ Focus Timer</h2>
+        <div id="timerDisplay">25:00</div>
+        <div class="timer-buttons">
+            <button id="startTimerBtn" onclick="startTimer()">Start</button>
+            <button id="resetTimerBtn" onclick="resetTimer()">Reset</button>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9em; color: var(--theme-text-secondary);">Time to focus! Work for 25 minutes, then take a 5-minute break.</p>
+    </div>
+</div>
+
+<div class="modal" id="feedbackModal" style="z-index: 3100;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeFeedbackModal()">✖</span>
+        <h2>Send Feedback</h2>
+        <p style="text-align: center; color: var(--theme-text-secondary); margin-top: -10px; margin-bottom: 15px;">Rate your experience</p>
+        <div class="star-rating" id="starRating">
+            <span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span>
+        </div>
+        <div class="form-group"><label for="feedbackComment">Comment:</label><textarea id="feedbackComment" placeholder="Write your feedback here..."></textarea></div>
+        <div class="form-group"><label for="feedbackName">Your Name:</label><input type="text" id="feedbackName" placeholder="Enter your name"></div>
+        <div class="modal-buttons"><button class="btn-cancel" onclick="closeFeedbackModal()">Cancel</button><button onclick="sendFeedback()">Send</button></div>
+    </div>
+</div>
+
+<div class="toast-notification" id="toastNotification"><span id="toastMessage"></span></div>
+
+<div id="videoPlayerModal">
+    <span class="close-video-btn" onclick="closeVideoPlayer()">✖</span>
+    <div class="adv-player-wrapper">
+        <iframe id="advIframePlayer" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="adv-player paused" id="advPlayer">
+            <div class="adv-video-wrapper">
+                <video id="advVideoElement" playsinline oncontextmenu="return false;"></video>
+                <img class="adv-watermark" src="https://i.ibb.co/3mwPpCZ4/Picsart-25-08-29-11-31-20-541.png" alt="Watermark">
+                <div class="adv-seek-indicator adv-seek-left"><svg viewBox="0 0 24 24"><path d="M11.99 5V1l-5 4 5 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg></div>
+                <div class="adv-seek-indicator adv-seek-right"><svg viewBox="0 0 24 24"><path d="M12.01 5V1l5 4-5 4V6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"></path></svg></div>
+            </div>
+            <div class="adv-controls">
+                <div class="adv-progress-container" id="advProgressContainer"><div class="adv-progress-range"><div class="adv-progress-bar" id="advProgressBar"><div class="adv-progress-thumb"></div></div></div></div>
+                <div class="adv-controls-row">
+                    <div style="display:flex; align-items:center;">
+                        <button class="adv-btn" id="advPlayBtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
+                        <div class="adv-volume-container">
+                            <button class="adv-btn" id="advVolumeBtn"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg></button>
+                            <input type="range" class="adv-volume-range" id="advVolumeRange" min="0" max="1" step="0.05" value="1">
+                        </div>
+                        <div class="adv-time-display" id="advTimeDisplay">0:00 / 0:00</div>
+                    </div>
+                    <div style="display:flex; align-items:center;">
+                        <button class="adv-btn" id="advSettingsBtn" title="Settings"><svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17-.59-1.69.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59-1.69.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path></svg></button>
+                        <button class="adv-btn" id="advPipBtn" title="PIP"><svg viewBox="0 0 24 24"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"></path></svg></button>
+                        <button class="adv-btn" id="advFitBtn" title="Fit/Fill"><svg viewBox="0 0 24 24"><path d="M21 17h-2v2h-2v-4h4v2zm-4-8h2V7h2V3h-4v4zm-8-4H7v2H3v4h4V7zm2 14H7v-2H3v-4h4v4z"></path></svg></button>
+                        <button class="adv-btn" id="advFullscreenBtn"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-menu" id="advSettingsMenu">
+                <div class="main-menu">
+                    <div class="settings-menu-inner">
+                        <h4>Settings</h4>
+                        <div class="setting-item" onclick="showSubmenu('speed')"><label>Playback Speed</label><span class="value" id="speed-value">Normal</span></div>
+                        <div class="setting-item"><div class="about-section" style="border:none; margin:0; padding:0;">EduMate.AI Player</div></div>
+                    </div>
+                </div>
+                <div class="submenu" id="submenu-speed">
+                     <div class="settings-menu-inner">
+                        <h4 onclick="hideSubmenu()" style="cursor:pointer;"><svg viewBox="0 0 24 24" width="20" height="20" style="vertical-align:middle; margin-right:5px;"><path fill="white" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>Speed</h4>
+                        <div class="speed-option selected" onclick="setSpeed(1, this)">Normal</div>
+                        <div class="speed-option" onclick="setSpeed(0.5, this)">0.5x</div>
+                        <div class="speed-option" onclick="setSpeed(1.25, this)">1.25x</div>
+                        <div class="speed-option" onclick="setSpeed(1.5, this)">1.5x</div>
+                        <div class="speed-option" onclick="setSpeed(2, this)">2.0x</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- External Javascripts -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+<!-- Custom Main Javascript -->
+<script src="script.js"></script>
+
+<script type="text/javascript" src="https://pl27840239.effectivegatecpm.com/1a/86/30/1a8630e2c195b5195236050199e90e08.js"></script>
+
+</body>
+</html>
