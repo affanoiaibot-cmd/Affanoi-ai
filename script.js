@@ -54,7 +54,7 @@ function handleHashRouting() {
         return;
     }
 
-    // 1. Handle dynamic blog posts (#blog-{title}, #blog-{title }etc)
+    // 1. Handle dynamic blog posts (#blog-1, #blog-2 etc)
     if (hash.startsWith('#blog-')) {
         const index = hash.replace('#blog-', '');
         if (index && !isNaN(index)) {
@@ -320,18 +320,75 @@ function handleKeyPress(event) {
     }
 }
 
+/* =========================================================
+   NEW IMAGE GENERATION LOGIC (Replaced)
+========================================================= */
 async function generateImage(prompt) {
     const encodedPrompt = encodeURIComponent(prompt);
     const uniqueId = Date.now();
-    const imageUrl = `hhttps://r-gengpt-api.vercel.app/api/image?prompt=${encodedPrompt}?n=${uniqueId}`;
-    return `
-    <div class="image-wrapper">
-        <div id="img-loader-${uniqueId}" class="image-loading-placeholder">
-            <div class="loader-ring" style="width: 30px; height: 30px; border-width: 3px;"></div>
-            <span style="font-size: 0.8em; margin-top: 10px;">Generating Art...</span>
-        </div>
-        <img src="${imageUrl}" class="message-image" alt="Generated Art" onload="document.getElementById('img-loader-${uniqueId}').style.display='none'; this.style.display='block'; document.getElementById('chatMessages').scrollTo({top: document.getElementById('chatMessages').scrollHeight, behavior: 'smooth'});" onerror="this.style.display='none'; document.getElementById('img-loader-${uniqueId}').innerHTML='Failed to load';" onclick="openImageViewer(this.src)">
-    </div>`;
+    
+    // Default style and camera for chat interface
+    const style = 'none'; 
+    const camera = 'none';
+    
+    try {
+        const apiUrl = `https://r-gengpt-api.vercel.app/api/image?prompt=${encodedPrompt}&style=${style}&camera=${camera}`;
+        
+        // Fetch from API
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.error?.message || "Failed to generate image");
+        }
+
+        const imageUrl = data.data.image_url;
+
+        return `
+        <div class="image-wrapper" style="height: auto; width: 220px; display: flex; flex-direction: column; gap: 10px;">
+            <div id="img-loader-${uniqueId}" class="image-loading-placeholder" style="height: 220px; width: 100%;">
+                <div class="loader-ring" style="width: 30px; height: 30px; border-width: 3px;"></div>
+                <span style="font-size: 0.8em; margin-top: 10px;">Loading Image...</span>
+            </div>
+            
+            <img src="${imageUrl}" class="message-image" alt="Generated Art" 
+                onload="document.getElementById('img-loader-${uniqueId}').style.display='none'; this.style.display='block'; document.getElementById('chatMessages').scrollTo({top: document.getElementById('chatMessages').scrollHeight, behavior: 'smooth'});" 
+                onerror="this.style.display='none'; document.getElementById('img-loader-${uniqueId}').innerHTML='Failed to load';" 
+                onclick="openImageViewer(this.src)" 
+                style="width: 100%; border-radius: 12px; cursor: pointer;">
+                
+            <button onclick="downloadGeneratedImage('${imageUrl}', 'R-GenGPT-${uniqueId}.jpg')" style="width: 100%; padding: 10px; background: var(--accent-gradient); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                <i class="fas fa-download"></i> Download HD Image
+            </button>
+        </div>`;
+    } catch (error) {
+        console.error("Generation Error:", error);
+        return `<div class="message-bubble" style="border: 1px solid #ef4444; color: #ef4444; background: rgba(239, 68, 68, 0.1);">❌ Error: ${error.message}</div>`;
+    }
+}
+
+// Download functionality exactly like the provided code
+async function downloadGeneratedImage(url, filename) {
+    try {
+        showToast('Downloading image... ⏳');
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        
+        window.URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(a);
+        
+        showToast('✅ Downloaded Successfully!');
+    } catch (error) {
+        console.error('Download error:', error);
+        showToast('❌ Failed to download. Try clicking the image to open it.');
+    }
 }
 
 async function getAIResponse(question, subject) {
