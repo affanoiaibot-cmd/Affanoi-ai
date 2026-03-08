@@ -4,7 +4,6 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
-        // Initial Router Check on Load
         handleHashRouting(); 
     }, 800); 
 });
@@ -34,14 +33,13 @@ const restrictedNames = ["shakeel", "sfmsri", "shakeel raja", "naik", "shakeel a
 const vipNames = ["rabia sarwar", "jaffer", "jfrrr", "ahatsham", "sohail bashir", "anayat", "sunail kumar dubey", "zaffer"];
 
 /* =========================================================
-   ROUTER CONFIGURATION
+   ROUTER CONFIGURATION & RANDOM BLOG ID LOGIC
 ========================================================= */
-// Map generic hashes to functions
 const ROUTES = {
-    "#blog": () => openBlogModal(null, true), // true = fromHash
+    "#blog": () => openBlogModal(null, true), 
     "#about": () => openAbout(true),
     "#community": () => openCommunity(true),
-    "#changeuser": () => { openMenu(); /* specific logic for change user handled in logout */ },
+    "#changeuser": () => { openMenu(); },
     "#pro": () => openProModal(true),
     "#timer": () => openFocusTimer(true),
     "#about/developer": () => openDeveloperModal(true)
@@ -50,26 +48,24 @@ const ROUTES = {
 function handleHashRouting() {
     const hash = window.location.hash;
     if (!hash) {
-        closeAllModals(false); // Close all if no hash
+        closeAllModals(false); 
         return;
     }
 
-    // 1. Handle dynamic blog posts (#blog-1, #blog-2 etc)
+    // Handles Random/Unique Blog IDs (e.g. #blog--Nxyz1238828)
     if (hash.startsWith('#blog-')) {
-        const index = hash.replace('#blog-', '');
-        if (index && !isNaN(index)) {
-            openBlogModal(parseInt(index), true);
+        const blogId = hash.replace('#blog-', '');
+        if (blogId) {
+            openBlogModal(blogId, true);
             return;
         }
     }
     
-    // 2. Handle mapped routes
     if (ROUTES[hash]) {
         ROUTES[hash]();
     }
 }
 
-// Listen for hash changes (Back/Forward navigation)
 window.addEventListener("hashchange", handleHashRouting);
 
 /* =========================================================
@@ -321,7 +317,7 @@ function handleKeyPress(event) {
 }
 
 /* =========================================================
-   NEW IMAGE GENERATION LOGIC (Replaced)
+   NEW IMAGE GENERATION LOGIC 
 ========================================================= */
 async function generateImage(prompt) {
     const encodedPrompt = encodeURIComponent(prompt);
@@ -658,7 +654,7 @@ function sendFeedback() {
 function openImageViewer(src) { document.getElementById('imageViewerDisplay').src = src; document.getElementById('imageViewerModal').style.display = 'flex'; updateBlur(); }
 function closeImageViewer() { document.getElementById('imageViewerModal').style.display = 'none'; updateBlur(); }
 
-// --- UPDATED BLOG FUNCTIONS (Native Share & Read More) ---
+// --- UPDATED BLOG FUNCTIONS (RANDOM ID SHARE & READ MORE) ---
 
 function generateSkeletonHTML() {
     return `
@@ -705,7 +701,7 @@ function toggleReadMore(btn) {
     }
 }
 
-function openBlogModal(specificBlogIndex = null, fromHash = false) {
+function openBlogModal(specificBlogId = null, fromHash = false) {
     const modal = document.getElementById('blogModal');
     const container = document.getElementById('blogContainer');
     
@@ -715,7 +711,7 @@ function openBlogModal(specificBlogIndex = null, fromHash = false) {
     closeMenu(false);
     
     if(!fromHash) {
-        if(specificBlogIndex !== null) window.location.hash = `#blog-${specificBlogIndex}`;
+        if(specificBlogId !== null) window.location.hash = `#blog-${specificBlogId}`;
         else window.location.hash = "#blog";
     }
     
@@ -724,15 +720,21 @@ function openBlogModal(specificBlogIndex = null, fromHash = false) {
     db.ref('blog').once('value').then((snapshot) => {
         const data = snapshot.val();
         if (!data) { container.innerHTML = '<div class="loading-text">No updates yet. Stay tuned!</div>'; return; }
-        const posts = Object.keys(data).map(key => data[key]).reverse();
+        
+        // Map over data and attach Firebase unique key
+        const posts = Object.keys(data).map(key => {
+            return { firebaseId: key, ...data[key] };
+        }).reverse();
+
         let html = '';
         
-        posts.forEach((post, index) => {
-            const galleryId = `gallery-${index}`; 
-            const counterId = `counter-${index}`;
+        posts.forEach((post, i) => {
+            const uniqueId = post.firebaseId; 
+            const galleryId = `gallery-${uniqueId}`; 
+            const counterId = `counter-${uniqueId}`;
             
             const baseUrl = window.location.href.split('#')[0];
-            const shareLink = `${baseUrl}#blog-${index}`;
+            const shareLink = `${baseUrl}#blog-${uniqueId}`; // UNIQUE SHARE URL
             
             let dateHtml = post.date ? `<span class="blog-date">${post.date}</span>` : '';
             let linkHtml = post.linkUrl ? `<a href="${post.linkUrl}" target="_blank" class="blog-link-btn">${post.linkText || "Visit Link"}</a>` : '';
@@ -751,7 +753,7 @@ function openBlogModal(specificBlogIndex = null, fromHash = false) {
             
             let videoGalleryHtml = ''; 
             if (post.videos && Array.isArray(post.videos) && post.videos.length > 0) { 
-                const totalVideos = post.videos.length; const vidGalleryId = `vid-gallery-${index}`; const vidCounterId = `vid-counter-${index}`; 
+                const totalVideos = post.videos.length; const vidGalleryId = `vid-gallery-${uniqueId}`; const vidCounterId = `vid-counter-${uniqueId}`; 
                 let vidsHtml = post.videos.map(videoObj => `<div class="blog-gallery-video-item" onclick="openVideoPlayer('${videoObj.url}')"><img src="${videoObj.thumbnail || 'https://i.ibb.co/3mwPpCZ4/Picsart-25-08-29-11-31-20-541.png'}" alt="Video Thumbnail"><div class="video-play-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M8 5v14l11-7z"></path></svg></div></div>`).join(''); 
                 videoGalleryHtml = `<div class="blog-gallery-wrapper"><div id="${vidCounterId}" class="blog-image-counter">1/${totalVideos}</div><div class="blog-gallery" id="${vidGalleryId}" data-counter-id="${vidCounterId}">${vidsHtml}</div></div>`; 
             }
@@ -781,6 +783,7 @@ function openBlogModal(specificBlogIndex = null, fromHash = false) {
                     </div>
                 `;
             } else {
+                content
                 contentHtml = `<div class="blog-content-text">${cleanContent}</div>`;
             }
             // ---------------------
@@ -788,7 +791,8 @@ function openBlogModal(specificBlogIndex = null, fromHash = false) {
             let shareBtnHtml = `<button class="blog-share-btn" onclick="shareBlogPost('${post.title || 'EduMate Update'}', '${shareLink}')"><i class="fas fa-share-alt"></i> Share Update</button>`;
             let footerHtml = `<div class="blog-footer">Posted on ${post.date || ""}</div>`;
             
-            html += `<div class="blog-card" id="blog-card-${index}">
+            // Use unique ID for the card div ID
+            html += `<div class="blog-card" id="blog-card-${uniqueId}">
                         <div class="blog-title-highlight">${post.title || 'Update'}</div>
                         <div class="blog-inner-content">
                             ${dateHtml} ${linkHtml} ${videoHtml} ${customVideoHtml} ${videoGalleryHtml} ${imageHtml} ${contentHtml} ${shareBtnHtml} ${footerHtml}
@@ -802,9 +806,10 @@ function openBlogModal(specificBlogIndex = null, fromHash = false) {
             let isScrolling; gallery.addEventListener('scroll', function() { const counterId = this.dataset.counterId; const counterEl = document.getElementById(counterId); if(counterEl) { counterEl.classList.add('faded'); window.clearTimeout(isScrolling); isScrolling = setTimeout(() => { const totalItems = this.children.length; const itemWidth = this.children[0].offsetWidth + 10; const currentScroll = this.scrollLeft; let idx = Math.round(currentScroll / itemWidth) + 1; idx = Math.max(1, Math.min(idx, totalItems)); counterEl.innerText = `${idx}/${totalItems}`; counterEl.classList.remove('faded'); }, 100); } });
         });
         
-        if (specificBlogIndex !== null) {
+        // Scroll to specific unique blog ID if provided
+        if (specificBlogId !== null) {
             setTimeout(() => {
-                const targetCard = document.getElementById(`blog-card-${specificBlogIndex}`);
+                const targetCard = document.getElementById(`blog-card-${specificBlogId}`);
                 if (targetCard) {
                     targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     targetCard.style.transition = 'transform 0.3s, box-shadow 0.3s';
